@@ -33,18 +33,13 @@ jobs:
           ###### End of Repository/Build Configurations ######
       - uses: 8398a7/action-slack@v3
         with:
-          job_name: Build and Deploy Job
-          status: custom
-          fields: workflow,job,commit,repo,ref,author,took
-          custom_payload: |
-            {
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} ${{ job.status }} in ${process.env.AS_TOOK}`,
-              }]
-            }
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+          AS_MESSAGE: |
+            ${{ github.event.head_commit.message }}
+            URL: ${{ steps.builddeploy.outputs.static_web_app_url }}
         if: always() # Pick up events even if the job fails or is canceled.
 
   close_pull_request_job:
