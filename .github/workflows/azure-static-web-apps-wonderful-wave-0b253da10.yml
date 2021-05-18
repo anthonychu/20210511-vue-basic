@@ -33,7 +33,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
       - uses: 8398a7/action-slack@v3
         with:
-          job_name: Build And Deploy
+          job_name: Build and Deploy Job
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
         env:
