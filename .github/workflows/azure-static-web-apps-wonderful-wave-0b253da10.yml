@@ -33,7 +33,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
       - uses: 8398a7/action-slack@v3
         with:
-          job_name: build_and_deploy_job
+          job_name: Build and Deploy Job
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
           custom_payload: |
