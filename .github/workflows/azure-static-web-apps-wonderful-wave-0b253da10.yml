@@ -36,11 +36,9 @@ jobs:
           job_name: Build and Deploy Job
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took # selectable (default: repo,message)
+          text: "URL: ${{ steps.builddeploy.outputs.static_web_app_url }}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
-          AS_MESSAGE: |
-            ${{ github.event.head_commit.message }}
-            URL: ${{ steps.builddeploy.outputs.static_web_app_url }}
         if: always() # Pick up events even if the job fails or is canceled.
 
   close_pull_request_job:
